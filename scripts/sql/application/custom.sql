@@ -26,7 +26,6 @@ comment on role custom is 'application: custom access to connect and create.';
 
 -- permissions
 grant create, connect on database custom to custom;
-alter role custom with createrole;
 grant usage, create on schema public to custom;
 
 
