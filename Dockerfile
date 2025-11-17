@@ -4,7 +4,6 @@ FROM postgres:17.6-trixie
 # Unix Tools: pgbackrest, jq, curl, wget
 # Unix GIS Tools: postgresql-17-postgis-3 osmium-tool, osm2pgsql
 RUN apt update \
-  && apt upgrade -y \
   && apt install -y curl jq osmium-tool osm2pgsql pgbackrest postgresql-17-postgis-3 wget
 
 # Install postgres extension: pg_timetable
