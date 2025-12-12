@@ -159,7 +159,7 @@ tests/run.sh all
 - Apply updates from a single script (ex. roles).
 
     ```bash
-    docker compose exec postgres bash -c "psql f sql/role/_all.sql"
+    docker compose exec postgres bash -c "psql -f sql/role/_all.sql"
     ```
 
 - Apply updates from all sql scripts.
