@@ -410,15 +410,14 @@ _main() {
     # delay the start of pg_timetable for a couple seconds
 	# until after postgres server command
 	echo "Starting pg_timetable"
+	export PGPASSWORD="${PGPASSWORD:-$POSTGRES_PASSWORD}"
 	( sleep 5; pg_timetable \
 		--log-file=${PGDATA}/log/timetable_run.log \
 		--log-file-format=text \
 		--log-file-rotate \
-		--dbname=postgres \
-		--user=$POSTGRES_USER \
-		--password=$POSTGRES_PASSWORD \
-		--sslmode=require \
-		--clientname=timetable_worker) &
+		--clientname=timetable_worker \
+		--connstr="postgresql:///postgres?sslmode=require") &
+	unset PGPASSWORD
 
 	echo "Starting postgres server"
 	exec "$@"
