@@ -39,26 +39,22 @@ services:
       CUSTOM_PASSWORD:     ${CUSTOM_PASSWORD:?}
     volumes:
       # Required volumes
-      - ./data/postgres/db:/data/postgresql
-      - ./data/postgres/pgbackrest:/data/pgbackrest
-      - ./data/postgres/certs:/data/certs
-      - ./config/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
-      # Optional volume: authentication
-      # - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf
-      # Optional volume: general config
-      # - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
-      # Optional volume: entrypoints
-      # - ./scripts/docker/primary-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
-      # - ./scripts/docker/secondary-entrypoint.sh:/docker-entrypoint-initdb.d/entrypoint.sh
-      # Optional volume: scripts
-      # - ./scripts/sql/:/docker-entrypoint-initdb.d/sql
-      # - ./scripts/utils/:/docker-entrypoint-initdb.d/utils
+      - ./data/postgres/db:/data/postgresql                                                    # Database Files
+      - ./data/postgres/pgbackrest:/data/pgbackrest                                            # Backups
+      - ./data/postgres/certs:/data/certs                                                      # TLS Certs
+      # Optional volumes
+      # - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf                                     # Authentication
+      # - ./config/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro                          # Backups
+      # - ./config/postgresql.conf:/etc/postgresql/postgresql.conf                             # General
+      # - ./scripts/docker/01_setup.sh:/usr/local/bin/01_setup.sh                              # Extension Setup
+      # - ./scripts/docker/02_applications.sh:/docker-entrypoint-initdb.d/02_applications.sh   # Application setup
+      # - ./scripts/sql/:/docker-entrypoint-initdb.d/sql                                       # SQL Scripts
+      # - ./scripts/utils/:/docker-entrypoint-initdb.d/utils                                   # Shell Utilities
     networks:
       - "postgres"
     expose:
       - "5432"
-    # Uncomment to access database on the host network
-    # ports: ["5432:5432"]
+    ports: ["5432:5432"]
     healthcheck:
       test: [ "CMD-SHELL", "PGPASSWORD=$$CUSTOM_PASSWORD psql --set=sslmode=require -U custom custom -l"]
       interval: 10s
