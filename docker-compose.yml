@@ -42,6 +42,7 @@ services:
       - ./data/postgres/db:/data/postgresql                                                    # Database Files
       - ./data/postgres/pgbackrest:/data/pgbackrest                                            # Backups
       - ./data/postgres/certs:/data/certs                                                      # TLS Certs
+      - ./data/postgres/log:/data/log                                                           # Log Files
       # Optional volumes
       # - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf                                     # Authentication
       # - ./config/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro                          # Backups
