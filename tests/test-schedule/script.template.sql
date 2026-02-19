@@ -10,21 +10,35 @@ select timetable.add_job(
 );
 select * from timetable.chain where chain_name = 'test_schedule';
 
--- wait for job to run
-do $$ begin raise info 'sleeping for 60 seconds while job runs'; end $$;
-select pg_sleep(60);
-
--- display log output
-select chain_id,chain_name,run_at,ts,message,message_data from
-timetable.chain
-inner join timetable.log
-on chain.chain_id = (log.message_data->>'chain')::bigint
-where chain.chain_name = 'test_schedule' and log.message = 'Chain executed successfully';
-
--- cleanup and error checking
 do $$
 declare
-  chain_id bigint;
+  job_success boolean;
+begin
+  for i in 1..10 loop
+    select exists ( select from
+      timetable.chain
+      left join timetable.log
+      on chain.chain_id = (log.message_data->>'chain')::bigint
+      where chain_name = 'test_schedule' and message = 'Chain executed successfully') into job_success;
+
+    if job_success then
+      raise info 'scheduled job test_schedule executed successfully';
+      exit;
+    else
+      raise info 'scheduled job test_schedule did not execute yet, sleeping for 10 seconds';
+      perform pg_sleep(10);
+    end if;
+  end loop;
+end $$;
+
+select * from
+timetable.chain
+left join timetable.log
+on chain.chain_id = (log.message_data->>'chain')::bigint
+where chain_name = 'test_schedule';
+
+do $$
+declare
   job_success boolean;
 begin
   select exists ( select from
@@ -41,4 +55,5 @@ begin
   else
     raise exception 'scheduled job test_schedule did not execute successfully';
   end if;
+
 end $$;
