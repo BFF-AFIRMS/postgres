@@ -6,7 +6,7 @@ echo "--------------------------------------------------------------------------
 echo "-- initializing applications begins"
 echo "-------------------------------------------------------------------------------"
 
-env | grep -v "POSTGRES_PASSWORD" | grep "_PASSWORD" | cut -d '_' -f 1 | sort | uniq | while read name_upper; do
+env | grep -v "POSTGRES_PASSWORD" | grep "_PASSWORD" | sed 's/_PASSWORD//g' | cut -f 1 -d "=" | sort | uniq | while read name_upper; do
   name="${name_upper,,}"
   log="${PGDATA}/log/${name}.log"
   echo "Creating ${name} database: $log"
