@@ -166,6 +166,7 @@ for test_name in ${test_names[@]}; do
   cp -r ${data_dir}/pgbackrest ${test_data_dir}/pgbackrest
   # We will need to regenerate certs with new container/host name
   mkdir -p ${test_data_dir}/certs
+  mkdir -p ${test_data_dir}/log
 
   echo -e "$(date '+%Y-%m-%d %H:%m:%S')\tStarting container: ${container}"
   docker compose $compose_args up -d postgres
