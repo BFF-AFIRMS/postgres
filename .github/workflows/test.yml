@@ -12,9 +12,6 @@ on:
     types: [published]
   workflow_call:
 
-env:
-  GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
-
 jobs:
 
   lint:
@@ -33,6 +30,8 @@ jobs:
           pre-commit install --install-hooks
 
       - name: Run Pre-Commit
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
         run: |
           pre-commit run --all-files
 
