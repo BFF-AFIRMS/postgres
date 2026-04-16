@@ -30,9 +30,8 @@ jobs:
           pre-commit install --install-hooks
 
       - name: Run Pre-Commit
-        env:
-          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
         run: |
+          export GITGUARDIAN_API_KEY=${{ secrets.GITGUARDIAN_API_KEY }}
           pre-commit run --all-files
 
   docker:
