@@ -48,7 +48,11 @@ RUN chown -R postgres:postgres /docker-entrypoint-initdb.d \
     && chown -R postgres:postgres /data/postgresql \
     && chmod +r /etc/postgresql/* \
     && mkdir -p /data/log \
-    && chown -R postgres:postgres /data/log
+    && chown -R postgres:postgres /data/log \
+    && mkdir -p /data/certs \
+    && chown -R postgres:postgres /data/certs
+
+
 
 # Final cleanup
 RUN apt autoremove -y
