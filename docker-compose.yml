@@ -11,7 +11,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME}-db"
     hostname: postgres
     build: .
-    image: bff-afirms/postgres:18.1
+    image: bff-afirms/postgres:18.4
     restart: unless-stopped
     # Restrict security privileges
     security_opt:

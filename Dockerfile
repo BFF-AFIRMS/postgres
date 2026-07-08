@@ -1,4 +1,4 @@
-FROM postgres:18.1-trixie
+FROM postgres:18.4-trixie
 
 # Install system packages:
 # Unix Tools: pgbackrest, jq, curl, wget
