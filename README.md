@@ -70,7 +70,7 @@ docker compose logs postgres
     scripts/utils/restore \
       --lsn 0/5000218 \
       --label 20251212-135455F_20251212-135502D \
-      --image bff-afirms/postgres:18.4 \
+      --image bff-afirms/postgres:18.6 \
       --data-dir data
     ```
 
@@ -79,7 +79,7 @@ docker compose logs postgres
     <summary>Show output</summary>
 
     ```text
-    docker run --rm --entrypoint pgbackrest --user 1000:1000 -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/db:/data/postgresql -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/pgbackrest:/data/pgbackrest -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/spool:/var/spool/pgbackrest -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/certs:/data/certs bff-afirms/postgres:18.4 --stanza=main --target-action=promote --type=lsn --set=20251212-135455F_20251212-135502D --target=0/5000218 --target-timeline=current restore
+    docker run --rm --entrypoint pgbackrest --user 1000:1000 -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/db:/data/postgresql -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/pgbackrest:/data/pgbackrest -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/spool:/var/spool/pgbackrest -v /home/username/Projects/BFF-AFIRMS/app/postgres/data/postgres/certs:/data/certs bff-afirms/postgres:18.6 --stanza=main --target-action=promote --type=lsn --set=20251212-135455F_20251212-135502D --target=0/5000218 --target-timeline=current restore
 
     2025-12-12 14:03:44.080 P00   INFO: restore command begin 2.57.0: --delta --exec-id=1-90846eb4 --log-level-console=info --log-level-file=info --log-path=/data/pgbackrest/log --pg1-path=/data/postgresql/main --repo1-path=/data/pgbackrest --set=20251212-135455F_20251212-135502D --stanza=main --target=0/5000218 --target-action=promote --target-timeline=current --type=lsn
 
